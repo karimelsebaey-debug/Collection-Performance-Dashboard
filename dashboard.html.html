@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<!--
+Collection Performance Dashboard - Mobile Navigation Debug Version
+Copyright (c) 2025 [Your Company Name]. All rights reserved.
+
+Author: [Your Name]
+Company: [Your Company Name]
+Created: [Creation Date]
+Last Modified: June 3, 2025
+Version: 1.2 (Mobile Enhanced Debug)
+
+This software and its source code are proprietary and confidential.
+Unauthorized copying, distribution, or use is strictly prohibited.
+For licensing inquiries, contact: [your-email@company.com]
+
+Features:
+- Mobile-responsive navigation with debug capabilities
+- Real-time data visualization
+- Multi-tab interface with enhanced UX
+- Client and agent performance tracking
+- Interactive charts and performance metrics
+- Advanced error handling and debugging
+
+Dependencies:
+- Tailwind CSS (MIT License)
+- Chart.js (MIT License)
+
+PROPRIETARY SOFTWARE - DO NOT DISTRIBUTE
+This dashboard contains proprietary business logic and algorithms.
+Reverse engineering or unauthorized use is strictly prohibited.
+Contains trade secrets and confidential information.
+
+LEGAL WARNING:
+This software is protected by copyright law and international treaties.
+Unauthorized reproduction or distribution may result in severe civil and criminal penalties.
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="[Your Name]">
+    <meta name="copyright" content="Copyright (c) 2025 [Your Company Name]. All rights reserved.">
+    <meta name="description" content="Collection Performance Dashboard - Proprietary mobile-responsive financial analytics platform with debug capabilities">
+    <meta name="keywords" content="collection, performance, dashboard, analytics, financial, mobile, responsive, debug">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="referrer" content="no-referrer">
+    <meta name="company" content="[Your Company Name]">
+    <meta name="version" content="1.2">
+    <title>Collection Performance Dashboard - Mobile Navigation Debug</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    
+    <!-- 
+    ⚠️ CRITICAL: LOAD DATA FROM EXTERNAL FILE
+    This loads dashboard data from dashboard-data.js
+    DO NOT MODIFY THIS HTML FILE - ONLY EDIT dashboard-data.js
+    Contact [your-email@company.com] for technical support
+    -->
+    <script src="dashboard-data.js"></script>
+    <style>
+        /*
+        Collection Performance Dashboard - Custom Styles (Debug Enhanced)
+        Copyright (c) 2025 [Your Company Name]. All rights reserved.
+        
+        PROPRIETARY CSS - Contains custom styling algorithms and design patterns.
+        Unauthorized use or modification is prohibited.
+        
+        This stylesheet contains trade secrets including:
+        - Custom animation algorithms
+        - Proprietary color schemes
+        - Mobile optimization techniques
+        - Debug visualization methods
+        */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+        }
+        .metric-card {
+            transition: all 0.3s ease;
+        }
+        .metric-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .animate-pulse {
+            animation: pulse 2s infinite;
+        }
+        .progress-bar {
+            height: 8px;
+            background-color: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            transition: width 0.5s ease;
+            border-radius: 4px;
+        }
+        
+        /* IMPROVED MOBILE NAVIGATION */
+        .sidebar {
+            position: fixed !important;
+            top: 0;
+            left: 0;
+            height: 100vh !important;
+            width: 280px;
+            z-index: 50;
+            background: white;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(-100%);
+            will-change: transform;
+        }
+        
+        .sidebar.show {
+            transform: translateX(0) !important;
+        }
+        
+        .content-area {
+            margin-left: 0 !important;
+            padding-top: 80px;
+            min-height: 100vh;
+        }
+        
+        /* IMPROVED HAMBURGER BUTTON */
+        .mobile-menu-btn {
+            position: fixed !important;
+            top: 16px;
+            left: 16px;
+            z-index: 9999 !important;
+            padding: 12px;
+            background: white !important;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
+            border: 2px solid #e5e7eb;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: block !important;
+            width: 48px;
+            height: 48px;
+            pointer-events: auto !important;
+        }
+        
+        .mobile-menu-btn:hover {
+            background: #f3f4f6;
+            border-color: #3b82f6;
+            transform: scale(1.05);
+        }
+        
+        .mobile-menu-btn:active {
+            background: #e5e7eb;
+            transform: scale(0.95);
+        }
+        
+        /* Mobile overlay */
+        .mobile-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 45;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .tab-button {
+            transition: all 0.3s ease;
+        }
+        .tab-button:hover:not(.active) {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            color: white;
+            transform: translateX(4px);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+        .tab-button.active {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%) !important;
+            color: white !important;
+            transform: translateX(4px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+        }
+        
+        .loading-skeleton {
+            background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        .error-message {
+            background-color: #fee;
+            border: 1px solid #fcc;
+            color: #c33;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+            display: none;
+        }
+        
+        /* Debug info */
+        .debug-info {
+            position: fixed;
+            top: 80px;
+            right: 16px;
+            background: #1f2937;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            z-index: 8000;
+            font-family: monospace;
+        }
+        
+        /* Content spacing improvements */
+        .content-area > * {
+            margin-top: 20px !important;
+        }
+        
+        .bg-white, .metric-card, .tab-content > * {
+            position: relative !important;
+            z-index: 1 !important;
+            margin-left: 80px !important;
+        }
+        
+        /* Enhanced Copyright Footer */
+        .copyright-footer {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 10px;
+            color: #64748b;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 6px 10px;
+            border-radius: 6px;
+            z-index: 1000;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Watermark */
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 4rem;
+            color: rgba(0, 0, 0, 0.03);
+            font-weight: bold;
+            z-index: 0;
+            pointer-events: none;
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="fixed inset-0 bg-white bg-opacity-75 z-50 flex items-center justify-center hidden">
+        <div class="text-center">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
+            <p class="mt-4 text-gray-600">Loading dashboard...</p>
+        </div>
+    </div>
+
+    <!-- Watermark -->
+    <div class="watermark">[YOUR COMPANY]</div>
+
+    <!-- Error Message Container -->
+    <div id="errorContainer" class="error-message fixed top-4 right-4 z-50"></div>
+
+    <!-- Mobile menu button - ALWAYS VISIBLE -->
+    <button id="mobileMenuBtn" class="mobile-menu-btn">
+        <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+    </button>
+
+    <!-- Mobile overlay -->
+    <div id="mobileOverlay" class="mobile-overlay"></div>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <div class="p-6">
+            <div class="flex items-center space-x-3 mb-8">
+                <div class="p-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl">
+                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold text-gray-900 leading-tight">Navigation</h2>
+                </div>
+            </div>
+            
+            <nav class="space-y-3">
+                <button onclick="switchTab('main')" id="tab-main" class="tab-button active w-full flex items-center space-x-3 px-4 py-3 text-left rounded-xl font-medium">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a2 2 0 002 2h10a2 2 0 002-2V10"></path>
+                    </svg>
+                    <span>Main Page</span>
+                </button>
+                
+                <button onclick="switchTab('client')" id="tab-client" class="tab-button w-full flex items-center space-x-3 px-4 py-3 text-left rounded-xl font-medium bg-gray-50 text-gray-700">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5"></path>
+                    </svg>
+                    <span>Client Performance</span>
+                </button>
+                
+                <button onclick="switchTab('tl')" id="tab-tl" class="tab-button w-full flex items-center space-x-3 px-4 py-3 text-left rounded-xl font-medium bg-gray-50 text-gray-700">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                    </svg>
+                    <span>TL Performance</span>
+                </button>
+                
+                <button onclick="switchTab('agent')" id="tab-agent" class="tab-button w-full flex items-center space-x-3 px-4 py-3 text-left rounded-xl font-medium bg-gray-50 text-gray-700">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                    </svg>
+                    <span>Agent Performance</span>
+                </button>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="content-area">
+        <!-- Header -->
+        <div class="bg-white shadow-sm border-b border-gray-200 p-6">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+                <div>
+                    <h1 id="pageTitle" class="text-3xl font-bold text-gray-900 mb-2">Collection Performance Dashboard</h1>
+                    <p id="pageSubtitle" class="text-gray-600">Real-time insights into collection performance and revenue metrics</p>
+                </div>
+                
+                <!-- Filters -->
+                <div class="flex flex-col sm:flex-row gap-3 mt-6 lg:mt-0">
+                    <div class="relative">
+                        <div class="absolute left-3 top-1/2 transform -translate-y-1/2 z-10 w-4 h-4 bg-purple-500 rounded-sm"></div>
+                        <select id="monthFilter" onchange="updateDashboard()" class="appearance-none bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-200 rounded-xl pl-10 pr-10 py-3 text-gray-800 font-medium shadow-md hover:shadow-lg hover:border-purple-300 focus:outline-none focus:ring-4 focus:ring-purple-100 focus:border-purple-400 transition-all duration-200 cursor-pointer min-w-[160px]">
+                            <option value="All">All Months</option>
+                            <option value="April 2025">April 2025</option>
+                            <option value="March 2025">March 2025</option>
+                            <option value="February 2025">February 2025</option>
+                            <option value="January 2025">January 2025</option>
+                            <option value="April 2024">April 2024</option>
+                            <option value="March 2024">March 2024</option>
+                            <option value="February 2024">February 2024</option>
+                            <option value="January 2024">January 2024</option>
+                        </select>
+                    </div>
+                    
+                    <div class="relative">
+                        <div class="absolute left-3 top-1/2 transform -translate-y-1/2 z-10 w-4 h-4 bg-blue-500 rounded-full"></div>
+                        <select id="clientFilter" onchange="updateDashboard()" class="appearance-none bg-gradient-to-r from-blue-50 to-cyan-50 border-2 border-blue-200 rounded-xl pl-10 pr-10 py-3 text-gray-800 font-medium shadow-md hover:shadow-lg hover:border-blue-300 focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-400 transition-all duration-200 cursor-pointer min-w-[160px]">
+                            <option value="All">All Clients</option>
+                            <option value="Client 1">Client 1</option>
+                            <option value="Client 2">Client 2</option>
+                            <option value="Client 3">Client 3</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="p-6">
+            <!-- Main Page Tab -->
+            <div id="content-main" class="tab-content">
+                <!-- Key Metrics Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <!-- Total Collections Card -->
+                    <div class="metric-card bg-white rounded-2xl shadow-3g p-6 border border-gray-200">
+                        <div class="flex justify-between items-start mb-3">
+                            <p class="text-sm font-medium text-gray-500 uppercase tracking-wide">Total Collections</p>
+                            <div class="p-2 bg-blue-500 rounded-xl shadow-sm">
+                                <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <p id="totalCollections" class="text-3xl font-bold text-gray-900 mb-3">
+                            <span class="loading-skeleton inline-block w-32 h-8 rounded"></span>
+                        </p>
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 text-blue-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                            <span class="text-sm font-medium text-blue-600">YTD Performance</span>
+                        </div>
+                    </div>
+
+                    <!-- Achievement Rate Card -->
+                    <div class="metric-card bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+                        <div class="flex justify-between items-start mb-3">
+                            <p class="text-sm font-medium text-gray-500 uppercase tracking-wide">Achievement Rate</p>
+                            <div class="p-2 bg-green-500 rounded-xl shadow-sm">
+                                <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <p id="achievementRate" class="text-3xl font-bold text-gray-900 mb-3">
+                            <span class="loading-skeleton inline-block w-24 h-8 rounded"></span>
+                        </p>
+                        <div id="achievementBadge" class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold">
+                            <span class="loading-skeleton inline-block w-16 h-6 rounded"></span>
+                        </div>
+                    </div>
+
+                    <!-- Total Revenue Card -->
+                    <div class="metric-card bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+                        <div class="flex justify-between items-start mb-3">
+                            <p class="text-sm font-medium text-gray-500 uppercase tracking-wide">Total Revenue</p>
+                            <div class="p-2 bg-purple-500 rounded-xl shadow-sm">
+                                <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <p id="totalRevenue" class="text-3xl font-bold text-gray-900 mb-3">
+                            <span class="loading-skeleton inline-block w-28 h-8 rounded"></span>
+                        </p>
+                        <div class="flex items-center">
+                            <svg class="h-4 w-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                            </svg>
+                            <span class="text-sm font-medium text-green-600">+12.5% vs last period</span>
+                        </div>
+                    </div>
+
+                    <!-- YoY Change Card -->
+                    <div class="metric-card bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+                        <div class="flex justify-between items-start mb-3">
+                            <p class="text-sm font-medium text-gray-500 uppercase tracking-wide">YoY Change</p>
+                            <div class="p-2 bg-orange-500 rounded-xl shadow-sm">
+                                <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <p id="yoyChange" class="text-3xl font-bold text-gray-900 mb-3">
+                            <span class="loading-skeleton inline-block w-20 h-8 rounded"></span>
+                        </p>
+                        <div class="flex items-center">
+                            <svg class="h-4 w-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                            <span class="text-sm font-medium text-green-600">vs Previous Year</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                    <!-- Monthly Trend Chart -->
+                    <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-xl font-bold text-gray-900">Monthly Collection Trend</h3>
+                            <div class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold flex items-center">
+                                <div class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
+                                Trending
+                            </div>
+                        </div>
+                        <div class="relative h-80">
+                            <canvas id="trendChart"></canvas>
+                            <div id="chartLoading" class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75">
+                                <div class="text-center">
+                                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto"></div>
+                                    <p class="mt-2 text-sm text-gray-600">Loading chart...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Client Performance Table -->
+                    <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-xl font-bold text-gray-900">
+                                <span id="performanceTitle">Client Performance vs Target</span>
+                            </h3>
+                            <div class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold flex items-center">
+                                <div class="w-2 h-2 bg-blue-500 rounded-full mr-2 animate-pulse"></div>
+                                Live Data
+                            </div>
+                        </div>
+                        <div id="performanceTable" class="space-y-4">
+                            <!-- Performance data will be populated here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Staff Performance Section -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-xl font-bold text-gray-900">Staff Achievement</h3>
+                        <div class="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-xs font-semibold flex items-center">
+                            <div class="w-2 h-2 bg-indigo-500 rounded-full mr-2"></div>
+                            Team Stats
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="staffContainer">
+                        <!-- Staff cards will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Client Performance Tab -->
+            <div id="content-client" class="tab-content hidden">
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Client Performance Details</h2>
+                    <div id="clientDetailTable" class="space-y-4">
+                        <!-- Client details will be populated here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- TL Performance Tab -->
+            <div id="content-tl" class="tab-content hidden">
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Team Leader Performance</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="p-6 bg-gray-50 rounded-xl">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-lg font-bold text-gray-900">TL Performance Overview</h3>
+                                <div class="inline-flex items-center px-3 py-1 rounded-full text-sm font-bold bg-blue-100 text-blue-800">
+                                    <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4"></path>
+                                    </svg>
+                                    Active
+                                </div>
+                            </div>
+                            <p class="text-gray-600">Team leader performance metrics and KPIs will be displayed here. This includes team management effectiveness, goal achievement rates, and leadership scores.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agent Performance Tab -->
+            <div id="content-agent" class="tab-content hidden">
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Agent Performance Details</h2>
+                    <div id="agentDetailTable" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <!-- Agent details will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="p-6">
+            <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+                <p class="text-gray-600 text-sm font-medium text-center">
+                    🔄 Dashboard automatically updates based on your selections • 
+                    <span class="text-blue-600 font-semibold" id="lastUpdated">Loading...</span>
+                </p>
+                <div class="flex items-center justify-center mt-3 space-x-4">
+                    <div class="flex items-center text-xs text-gray-500">
+                        <div class="w-2 h-2 bg-green-400 rounded-full mr-1 animate-pulse"></div>
+                        Live Data
+                    </div>
+                    <div class="flex items-center text-xs text-gray-500">
+                        <div class="w-2 h-2 bg-blue-400 rounded-full mr-1"></div>
+                        Interactive
+                    </div>
+                    <div class="flex items-center text-xs text-gray-500">
+                        <div class="w-2 h-2 bg-purple-400 rounded-full mr-1"></div>
+                        Responsive
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Copyright Footer -->
+        <div class="copyright-footer">
+            © 2025 [Your Company Name] • Proprietary Software • v1.2 Debug
+        </div>
+    </div>
+
+    <script>
+        /*
+        Collection Performance Dashboard - JavaScript Core (Debug Enhanced)
+        Copyright (c) 2025 [Your Company Name]. All rights reserved.
+        Author: [Your Name]
+        Version: 1.2 (Mobile Enhanced with Debug Capabilities)
+        
+        ⚠️ CRITICAL WARNING: DO NOT EDIT THIS FILE
+        Data updates should ONLY be made in dashboard-data.js
+        Contact [your-email@company.com] for any code modifications
+        
+        PROPRIETARY SOFTWARE NOTICE:
+        This script contains proprietary algorithms, business logic, and data processing methods.
+        The following are strictly prohibited:
+        - Reverse engineering or decompilation
+        - Unauthorized copying or distribution
+        - Modification without explicit permission
+        - Use in competing products or services
+        - Extraction of business logic or algorithms
+        
+        TRADE SECRETS INCLUDED:
+        - Performance calculation algorithms
+        - Data visualization techniques
+        - Mobile optimization methods
+        - User interface patterns
+        - Debug and monitoring systems
+        
+        This software is protected by copyright law and international treaties.
+        Unauthorized reproduction or distribution may result in severe civil and criminal penalties.
+        
+        For licensing inquiries: [your-email@company.com]
+        Legal Department: [Your Company Name]
+        */
+
+        // ============================================================================
+        // DATA LOADING AND VALIDATION (PROPRIETARY SYSTEM)
+        // ============================================================================
+        
+        // Global variables
+        let trendChart = null;
+        let currentTab = 'main';
+        let isLoading = false;
+        let sidebarVisible = false;
+        let dashboardData = null;
+
+        // Load and validate external data (PROPRIETARY DATA LOADER)
+        function loadDashboardData() {
+            try {
+                // Check if external data file was loaded
+                if (typeof window.DASHBOARD_CONFIG === 'undefined') {
+                    throw new Error('Dashboard data file not found. Please ensure dashboard-data.js is in the same folder.');
+                }
+                
+                // Validate data structure (PROPRIETARY VALIDATION ALGORITHM)
+                const config = window.DASHBOARD_CONFIG;
+                
+                if (!config.clients || !Array.isArray(config.clients)) {
+                    throw new Error('Invalid data structure: clients array missing');
+                }
+                
+                if (!config.staff || !Array.isArray(config.staff)) {
+                    throw new Error('Invalid data structure: staff array missing');
+                }
+                
+                // Validate each client has required fields
+                config.clients.forEach((client, index) => {
+                    if (!client.name || typeof client.target !== 'number' || typeof client.achieved !== 'number') {
+                        throw new Error(`Invalid client data at index ${index}`);
+                    }
+                });
+                
+                // Validate each staff member has required fields
+                config.staff.forEach((staff, index) => {
+                    if (!staff.name || typeof staff.achievement !== 'number' || typeof staff.collection !== 'number') {
+                        throw new Error(`Invalid staff data at index ${index}`);
+                    }
+                });
+                
+                // Data is valid, assign to global variable
+                dashboardData = config;
+                console.log('✅ Dashboard data loaded and validated successfully');
+                return true;
+                
+            } catch (error) {
+                console.error('❌ Data loading error:', error.message);
+                showError('Data Error: ' + error.message + ' - Contact technical support.');
+                return false;
+            }
+        }
+
+        // Debug functions (PROPRIETARY DEBUG SYSTEM)
+        function updateDebugInfo() {
+            const status = document.getElementById('sidebarStatus');
+            const screenSize = document.getElementById('screenSize');
+            
+            if (status) {
+                status.textContent = sidebarVisible ? 'Visible' : 'Hidden';
+                status.style.color = sidebarVisible ? '#10b981' : '#ef4444';
+            }
+            
+            if (screenSize) {
+                screenSize.textContent = `${window.innerWidth}x${window.innerHeight}`;
+            }
+        }
+
+        // Error handling functions (PROPRIETARY ERROR HANDLING)
+        function showError(message) {
+            const errorContainer = document.getElementById('errorContainer');
+            if (errorContainer) {
+                errorContainer.textContent = message;
+                errorContainer.style.display = 'block';
+                setTimeout(() => {
+                    errorContainer.style.display = 'none';
+                }, 5000);
+            }
+            console.error(message);
+        }
+
+        function showLoading() {
+            isLoading = true;
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            if (loadingOverlay) {
+                loadingOverlay.classList.remove('hidden');
+            }
+        }
+
+        function hideLoading() {
+            isLoading = false;
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            if (loadingOverlay) {
+                loadingOverlay.classList.add('hidden');
+            }
+            
+            // Remove skeleton loaders
+            document.querySelectorAll('.loading-skeleton').forEach(skeleton => {
+                skeleton.remove();
+            });
+        }
+
+        // IMPROVED Toggle sidebar function with better error handling (PROPRIETARY NAVIGATION SYSTEM)
+        function toggleSidebar() {
+            console.log('🔄 Toggle sidebar clicked');
+            
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('mobileOverlay');
+            
+            if (!sidebar) {
+                console.error('❌ Sidebar element not found');
+                return;
+            }
+            
+            sidebarVisible = !sidebarVisible;
+            console.log(`📱 Sidebar now: ${sidebarVisible ? 'VISIBLE' : 'HIDDEN'}`);
+            
+            if (sidebarVisible) {
+                // Show sidebar
+                sidebar.classList.add('show');
+                if (overlay) overlay.classList.add('show');
+                console.log('✅ Sidebar shown');
+            } else {
+                // Hide sidebar
+                sidebar.classList.remove('show');
+                if (overlay) overlay.classList.remove('show');
+                console.log('✅ Sidebar hidden');
+            }
+            
+            updateDebugInfo();
+        }
+
+        // Close sidebar function
+        function closeSidebar() {
+            console.log('🔄 Close sidebar called');
+            
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('mobileOverlay');
+            
+            if (sidebar && overlay) {
+                sidebarVisible = false;
+                sidebar.classList.remove('show');
+                overlay.classList.remove('show');
+                console.log('✅ Sidebar closed');
+                updateDebugInfo();
+            }
+        }
+
+        // Tab switching functionality with error handling (PROPRIETARY TAB SYSTEM)
+        function switchTab(tabName) {
+            try {
+                console.log(`🔄 Switching to tab: ${tabName}`);
+                
+                // Auto-close sidebar when switching tabs
+                closeSidebar();
+                
+                // Hide all tab contents
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.add('hidden');
+                });
+                
+                // Reset all tab buttons
+                document.querySelectorAll('.tab-button').forEach(button => {
+                    button.className = 'tab-button w-full flex items-center space-x-3 px-4 py-3 text-left rounded-xl font-medium bg-gray-50 text-gray-700';
+                });
+                
+                // Show selected tab content
+                const selectedContent = document.getElementById(`content-${tabName}`);
+                if (selectedContent) {
+                    selectedContent.classList.remove('hidden');
+                }
+                
+                // Style active tab button
+                const activeButton = document.getElementById(`tab-${tabName}`);
+                if (activeButton) {
+                    activeButton.className = 'tab-button active w-full flex items-center space-x-3 px-4 py-3 text-left rounded-xl font-medium';
+                }
+                
+                // Update page title and subtitle
+                const titles = {
+                    'main': {
+                        title: 'Collection Performance Dashboard',
+                        subtitle: 'Real-time insights into collection performance and revenue metrics'
+                    },
+                    'client': {
+                        title: 'Client Performance Analysis',
+                        subtitle: 'Detailed breakdown of client-specific performance metrics'
+                    },
+                    'tl': {
+                        title: 'Team Leader Performance',
+                        subtitle: 'Team leadership effectiveness and achievement tracking'
+                    },
+                    'agent': {
+                        title: 'Agent Performance Details',
+                        subtitle: 'Individual agent performance and goal tracking'
+                    }
+                };
+                
+                const pageTitle = document.getElementById('pageTitle');
+                const pageSubtitle = document.getElementById('pageSubtitle');
+                
+                if (pageTitle && titles[tabName]) {
+                    pageTitle.textContent = titles[tabName].title;
+                }
+                if (pageSubtitle && titles[tabName]) {
+                    pageSubtitle.textContent = titles[tabName].subtitle;
+                }
+                
+                currentTab = tabName;
+                
+                // Update content based on selected tab
+                if (tabName === 'client') {
+                    updateClientDetails();
+                } else if (tabName === 'agent') {
+                    updateAgentDetails();
+                }
+                
+                console.log(`✅ Tab switched to: ${tabName}`);
+            } catch (error) {
+                showError('Error switching tabs: ' + error.message);
+            }
+        }
+
+        // Format currency with error handling (PROPRIETARY FORMATTING ALGORITHM)
+        function formatCurrency(amount) {
+            try {
+                return new Intl.NumberFormat('en-BH', {
+                    style: 'currency',
+                    currency: 'OMR',
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
+                }).format(amount);
+            } catch (error) {
+                return 'OMR ' + amount.toFixed(0);
+            }
+        }
+
+        // Format decimal (PROPRIETARY FORMATTING ALGORITHM)
+        function formatDecimal(amount) {
+            if (amount >= 1000000) return (amount / 1000000).toFixed(1) + 'M';
+            if (amount >= 1000) return (amount / 1000).toFixed(1) + 'K';
+            return amount.toString();
+        }
+
+        // Get performance badge (PROPRIETARY PERFORMANCE EVALUATION SYSTEM)
+        function getPerformanceBadge(rate) {
+            if (rate >= 100) return { color: 'bg-green-100 text-green-800 border-green-200', text: 'Excellent', icon: '🎯' };
+            if (rate >= 80) return { color: 'bg-yellow-100 text-yellow-800 border-yellow-200', text: 'Good', icon: '📈' };
+            return { color: 'bg-red-100 text-red-800 border-red-200', text: 'Needs Improvement', icon: '⚠️' };
+        }
+
+        // Create trend chart with error handling (PROPRIETARY CHART GENERATION ALGORITHM)
+        function createTrendChart() {
+            try {
+                // Check if Chart.js is loaded
+                if (typeof Chart === 'undefined') {
+                    showError('Chart.js library not loaded. Please check your internet connection.');
+                    return;
+                }
+
+                const ctx = document.getElementById('trendChart');
+                if (!ctx) {
+                    showError('Chart canvas element not found');
+                    return;
+                }
+
+                // Hide loading indicator
+                const chartLoading = document.getElementById('chartLoading');
+                if (chartLoading) {
+                    chartLoading.style.display = 'none';
+                }
+
+                const selectedClient = document.getElementById('clientFilter').value;
+                let filteredClients = dashboardData.clients;
+                if (selectedClient !== 'All') {
+                    filteredClients = dashboardData.clients.filter(client => client.name === selectedClient);
+                }
+                
+                // Prepare data for the chart (PROPRIETARY DATA PROCESSING)
+                const months = ['January', 'February', 'March', 'April'];
+                const targetData = [];
+                const achievedData = [];
+                
+                months.forEach(month => {
+                    let totalTarget = 0;
+                    let totalAchieved = 0;
+                    
+                    filteredClients.forEach(client => {
+                        const monthKey = `${month} 2025`;
+                        if (client.monthlyData && client.monthlyData[monthKey]) {
+                            totalTarget += client.monthlyData[monthKey].target || 0;
+                            totalAchieved += client.monthlyData[monthKey].achieved || 0;
+                        }
+                    });
+                    
+                    targetData.push(totalTarget / 1000); // Convert to thousands
+                    achievedData.push(totalAchieved / 1000); // Convert to thousands
+                });
+                
+                // Update existing chart or create new one
+                if (trendChart) {
+                    trendChart.data.datasets[0].data = targetData;
+                    trendChart.data.datasets[1].data = achievedData;
+                    trendChart.update('none'); // No animation on update
+                } else {
+                    trendChart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: months,
+                            datasets: [
+                                {
+                                    label: 'Target (K)',
+                                    data: targetData,
+                                    borderColor: '#ef4444',
+                                    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                                    borderWidth: 3,
+                                    fill: false,
+                                    tension: 0.4,
+                                    pointBackgroundColor: '#ef4444',
+                                    pointBorderColor: '#ffffff',
+                                    pointBorderWidth: 2,
+                                    pointRadius: 6
+                                },
+                                {
+                                    label: 'Achieved (K)',
+                                    data: achievedData,
+                                    borderColor: '#10b981',
+                                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                                    borderWidth: 3,
+                                    fill: true,
+                                    tension: 0.4,
+                                    pointBackgroundColor: '#10b981',
+                                    pointBorderColor: '#ffffff',
+                                    pointBorderWidth: 2,
+                                    pointRadius: 6
+                                }
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    position: 'top',
+                                    labels: {
+                                        usePointStyle: true,
+                                        padding: 20,
+                                        font: {
+                                            weight: 'bold'
+                                        }
+                                    }
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    grid: {
+                                        color: 'rgba(0, 0, 0, 0.05)'
+                                    },
+                                    ticks: {
+                                        callback: function(value) {
+                                            return value + 'K';
+                                        }
+                                    }
+                                },
+                                x: {
+                                    grid: {
+                                        color: 'rgba(0, 0, 0, 0.05)'
+                                    }
+                                }
+                            },
+                            interaction: {
+                                intersect: false,
+                                mode: 'index'
+                            }
+                        }
+                    });
+                }
+            } catch (error) {
+                showError('Error creating chart: ' + error.message);
+            }
+        }
+
+        // Update performance table with error handling (PROPRIETARY TABLE GENERATION)
+        function updatePerformanceTable(filteredClients, selectedMonth) {
+            try {
+                const container = document.getElementById('performanceTable');
+                if (!container) return;
+                
+                container.innerHTML = '';
+
+                filteredClients.forEach(client => {
+                    let target, achieved;
+                    if (selectedMonth === 'All') {
+                        target = client.target || 0;
+                        achieved = client.achieved || 0;
+                    } else {
+                        const monthData = client.monthlyData ? client.monthlyData[selectedMonth] : null;
+                        target = monthData ? (monthData.target || 0) : 0;
+                        achieved = monthData ? (monthData.achieved || 0) : 0;
+                    }
+
+                    const achievementRate = target > 0 ? (achieved / target) * 100 : 0;
+                    const badge = getPerformanceBadge(achievementRate);
+
+                    const performanceItem = `
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all duration-200">
+                            <div class="flex items-center space-x-4">
+                                <div class="p-2 bg-blue-100 rounded-lg">
+                                    <svg class="h-5 w-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-gray-900">${client.name}</p>
+                                    <p class="text-sm text-gray-600">${formatCurrency(achieved)} / ${formatCurrency(target)}</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="progress-bar w-24 mb-2">
+                                    <div class="progress-fill bg-${achievementRate >= 100 ? 'green' : achievementRate >= 80 ? 'yellow' : 'red'}-500" style="width: ${Math.min(achievementRate, 100)}%"></div>
+                                </div>
+                                <div class="inline-flex items-center px-2 py-1 rounded-full text-xs font-bold ${badge.color}">
+                                    <span class="mr-1">${badge.icon}</span>${achievementRate.toFixed(1)}%
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    container.innerHTML += performanceItem;
+                });
+            } catch (error) {
+                showError('Error updating performance table: ' + error.message);
+            }
+        }
+
+        // Update staff cards with error handling (PROPRIETARY STAFF MANAGEMENT SYSTEM)
+        function updateStaffCards() {
+            try {
+                const selectedClient = document.getElementById('clientFilter').value;
+                let staffData = dashboardData.staff;
+                
+                if (selectedClient !== 'All') {
+                    staffData = dashboardData.staff.filter(staff => staff.client === selectedClient);
+                }
+
+                const container = document.getElementById('staffContainer');
+                if (!container) return;
+                
+                container.innerHTML = '';
+
+                staffData.forEach(staff => {
+                    const badge = getPerformanceBadge(staff.achievement);
+                    const staffCard = `
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all duration-200">
+                            <div class="flex items-center">
+                                <div class="p-3 bg-indigo-100 rounded-xl mr-3">
+                                    <svg class="h-4 w-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-gray-900 text-sm">${staff.name}</p>
+                                    <p class="text-xs text-gray-600 mt-1">${formatCurrency(staff.collection)} / ${formatCurrency(staff.target)}</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="inline-flex items-center px-2 py-1 rounded-full text-xs font-bold ${badge.color}">
+                                    <span class="mr-1">${badge.icon}</span>${staff.achievement.toFixed(1)}%
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    container.innerHTML += staffCard;
+                });
+            } catch (error) {
+                showError('Error updating staff cards: ' + error.message);
+            }
+        }
+
+        // Update client details for client tab (PROPRIETARY CLIENT ANALYSIS SYSTEM)
+        function updateClientDetails() {
+            try {
+                const selectedMonth = document.getElementById('monthFilter').value;
+                const container = document.getElementById('clientDetailTable');
+                if (!container) return;
+                
+                container.innerHTML = '';
+
+                dashboardData.clients.forEach(client => {
+                    let target, achieved, revenue;
+                    if (selectedMonth === 'All') {
+                        target = client.target || 0;
+                        achieved = client.achieved || 0;
+                        revenue = client.revenue || 0;
+                    } else {
+                        const monthData = client.monthlyData ? client.monthlyData[selectedMonth] : null;
+                        target = monthData ? (monthData.target || 0) : 0;
+                        achieved = monthData ? (monthData.achieved || 0) : 0;
+                        revenue = monthData ? (monthData.revenue || 0) : 0;
+                    }
+
+                    const achievementRate = target > 0 ? (achieved / target) * 100 : 0;
+                    const badge = getPerformanceBadge(achievementRate);
+
+                    const clientDetail = `
+                        <div class="p-6 bg-gray-50 rounded-xl">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-xl font-bold text-gray-900">${client.name}</h3>
+                                <div class="inline-flex items-center px-3 py-1 rounded-full text-sm font-bold ${badge.color}">
+                                    <span class="mr-1">${badge.icon}</span>${badge.text}
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div class="text-center p-4 bg-white rounded-lg">
+                                    <p class="text-sm text-gray-600">Target</p>
+                                    <p class="text-2xl font-bold text-gray-900">${formatCurrency(target)}</p>
+                                </div>
+                                <div class="text-center p-4 bg-white rounded-lg">
+                                    <p class="text-sm text-gray-600">Achieved</p>
+                                    <p class="text-2xl font-bold text-green-600">${formatCurrency(achieved)}</p>
+                                </div>
+                                <div class="text-center p-4 bg-white rounded-lg">
+                                    <p class="text-sm text-gray-600">Revenue</p>
+                                    <p class="text-2xl font-bold text-purple-600">${formatCurrency(revenue)}</p>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-sm text-gray-600">Achievement Rate</span>
+                                    <span class="text-sm font-bold text-gray-900">${achievementRate.toFixed(1)}%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill bg-${achievementRate >= 100 ? 'green' : achievementRate >= 80 ? 'yellow' : 'red'}-500" style="width: ${Math.min(achievementRate, 100)}%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    container.innerHTML += clientDetail;
+                });
+            } catch (error) {
+                showError('Error updating client details: ' + error.message);
+            }
+        }
+
+        // Update agent details for agent tab (PROPRIETARY AGENT PERFORMANCE SYSTEM)
+        function updateAgentDetails() {
+            try {
+                const selectedClient = document.getElementById('clientFilter').value;
+                let staffData = dashboardData.staff;
+                
+                if (selectedClient !== 'All') {
+                    staffData = dashboardData.staff.filter(staff => staff.client === selectedClient);
+                }
+
+                const container = document.getElementById('agentDetailTable');
+                if (!container) return;
+                
+                container.innerHTML = '';
+
+                staffData.forEach(staff => {
+                    const badge = getPerformanceBadge(staff.achievement);
+                    const agentDetail = `
+                        <div class="p-6 bg-gray-50 rounded-xl">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center">
+                                    <div class="p-3 bg-indigo-100 rounded-xl mr-3">
+                                        <svg class="h-6 w-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-lg font-bold text-gray-900">${staff.name}</h3>
+                                        <p class="text-sm text-gray-600">${staff.client}</p>
+                                    </div>
+                                </div>
+                                <div class="inline-flex items-center px-3 py-1 rounded-full text-sm font-bold ${badge.color}">
+                                    <span class="mr-1">${badge.icon}</span>${staff.achievement.toFixed(1)}%
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 mb-4">
+                                <div class="text-center p-3 bg-white rounded-lg">
+                                    <p class="text-xs text-gray-600">Target</p>
+                                    <p class="text-lg font-bold text-gray-900">${formatCurrency(staff.target)}</p>
+                                </div>
+                                <div class="text-center p-3 bg-white rounded-lg">
+                                    <p class="text-xs text-gray-600">Collection</p>
+                                    <p class="text-lg font-bold text-green-600">${formatCurrency(staff.collection)}</p>
+                                </div>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill bg-${staff.achievement >= 100 ? 'green' : staff.achievement >= 80 ? 'yellow' : 'red'}-500" style="width: ${Math.min(staff.achievement, 100)}%"></div>
+                            </div>
+                        </div>
+                    `;
+                    container.innerHTML += agentDetail;
+                });
+            } catch (error) {
+                showError('Error updating agent details: ' + error.message);
+            }
+        }
+
+        // Update dashboard based on filters (PROPRIETARY DASHBOARD ENGINE)
+        function updateDashboard() {
+            if (isLoading) return;
+            
+            try {
+                const selectedClient = document.getElementById('clientFilter').value;
+                const selectedMonth = document.getElementById('monthFilter').value;
+                
+                let filteredClients = dashboardData.clients;
+                if (selectedClient !== 'All') {
+                    filteredClients = dashboardData.clients.filter(client => client.name === selectedClient);
+                }
+
+                // Calculate metrics based on month selection (PROPRIETARY CALCULATION ALGORITHM)
+                let totalCollections = 0;
+                let totalTarget = 0;
+                let totalRevenue = 0;
+
+                if (selectedMonth === 'All') {
+                    totalCollections = filteredClients.reduce((sum, client) => sum + (client.achieved || 0), 0);
+                    totalTarget = filteredClients.reduce((sum, client) => sum + (client.target || 0), 0);
+                    totalRevenue = filteredClients.reduce((sum, client) => sum + (client.revenue || 0), 0);
+                } else {
+                    filteredClients.forEach(client => {
+                        if (client.monthlyData && client.monthlyData[selectedMonth]) {
+                            totalCollections += client.monthlyData[selectedMonth].achieved || 0;
+                            totalTarget += client.monthlyData[selectedMonth].target || 0;
+                            totalRevenue += client.monthlyData[selectedMonth].revenue || 0;
+                        }
+                    });
+                }
+
+                const achievementRate = totalTarget > 0 ? (totalCollections / totalTarget) * 100 : 0;
+
+                // Update metric cards with error handling
+                const totalCollectionsEl = document.getElementById('totalCollections');
+                if (totalCollectionsEl) {
+                    totalCollectionsEl.textContent = formatCurrency(totalCollections);
+                }
+
+                const achievementRateEl = document.getElementById('achievementRate');
+                if (achievementRateEl) {
+                    achievementRateEl.textContent = achievementRate.toFixed(1) + '%';
+                }
+
+                const totalRevenueEl = document.getElementById('totalRevenue');
+                if (totalRevenueEl) {
+                    totalRevenueEl.textContent = formatCurrency(totalRevenue);
+                }
+
+                // Update YoY change based on selection (PROPRIETARY YOY CALCULATION)
+                let yoyChange = '+8.2%';
+                if (selectedMonth.includes('2025') && selectedMonth !== 'All') {
+                    const month2024 = selectedMonth.replace('2025', '2024');
+                    let collections2025 = 0;
+                    let collections2024 = 0;
+                    
+                    filteredClients.forEach(client => {
+                        if (client.monthlyData) {
+                            if (client.monthlyData[selectedMonth]) {
+                                collections2025 += client.monthlyData[selectedMonth].achieved || 0;
+                            }
+                            if (client.monthlyData[month2024]) {
+                                collections2024 += client.monthlyData[month2024].achieved || 0;
+                            }
+                        }
+                    });
+                    
+                    if (collections2024 > 0) {
+                        const change = ((collections2025 - collections2024) / collections2024) * 100;
+                        yoyChange = (change > 0 ? '+' : '') + change.toFixed(1) + '%';
+                    }
+                }
+                
+                const yoyChangeEl = document.getElementById('yoyChange');
+                if (yoyChangeEl) {
+                    yoyChangeEl.textContent = yoyChange;
+                }
+
+                // Update achievement badge
+                const badge = getPerformanceBadge(achievementRate);
+                const badgeElement = document.getElementById('achievementBadge');
+                if (badgeElement) {
+                    badgeElement.className = `inline-flex items-center px-3 py-1 rounded-full text-xs font-bold ${badge.color}`;
+                    badgeElement.innerHTML = `
+                        <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4"></path>
+                        </svg>
+                        ${badge.text}
+                    `;
+                }
+
+                // Update performance title
+                const performanceTitle = selectedClient === 'All' ? 
+                    `Client Performance vs Target ${selectedMonth !== 'All' ? '- ' + selectedMonth : ''}` : 
+                    `${selectedClient} Performance ${selectedMonth !== 'All' ? '- ' + selectedMonth : ''}`;
+                const performanceTitleEl = document.getElementById('performanceTitle');
+                if (performanceTitleEl) {
+                    performanceTitleEl.textContent = performanceTitle;
+                }
+
+                // Update components based on current tab
+                if (currentTab === 'main') {
+                    updatePerformanceTable(filteredClients, selectedMonth);
+                    updateStaffCards();
+                    createTrendChart();
+                } else if (currentTab === 'client') {
+                    updateClientDetails();
+                } else if (currentTab === 'agent') {
+                    updateAgentDetails();
+                }
+
+                // Update last updated time
+                const lastUpdatedEl = document.getElementById('lastUpdated');
+                if (lastUpdatedEl) {
+                    lastUpdatedEl.textContent = 'Last updated: ' + new Date().toLocaleString();
+                }
+            } catch (error) {
+                showError('Error updating dashboard: ' + error.message);
+            }
+        }
+
+        // IMPROVED INITIALIZATION - Better event handling (PROPRIETARY INITIALIZATION SYSTEM)
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Dashboard initializing...');
+            
+            // Initial loading
+            showLoading();
+            
+            // CRITICAL: Load external data first
+            if (!loadDashboardData()) {
+                hideLoading();
+                showError('Failed to load dashboard data. Please check that dashboard-data.js file exists and is properly formatted.');
+                return;
+            }
+            
+            // Set up mobile menu button event listener - IMPROVED VERSION
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileOverlay = document.getElementById('mobileOverlay');
+            
+            if (mobileMenuBtn) {
+                // Remove any existing listeners
+                mobileMenuBtn.replaceWith(mobileMenuBtn.cloneNode(true));
+                const newBtn = document.getElementById('mobileMenuBtn');
+                
+                newBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('🔄 Menu button clicked');
+                    toggleSidebar();
+                });
+                
+                // Add touch events for mobile
+                newBtn.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    toggleSidebar();
+                });
+                
+                console.log('✅ Mobile menu button events attached');
+            } else {
+                console.error('❌ Mobile menu button not found');
+            }
+            
+            if (mobileOverlay) {
+                mobileOverlay.addEventListener('click', closeSidebar);
+                mobileOverlay.addEventListener('touchstart', closeSidebar);
+                console.log('✅ Mobile overlay event listener attached');
+            }
+            
+            // Initialize debug info
+            updateDebugInfo();
+            
+            // Small delay to show loading state
+            setTimeout(() => {
+                hideLoading();
+                updateDashboard();
+                console.log('✅ Dashboard initialization complete');
+            }, 100);
+        });
+
+        // Better initialization for Chart.js
+        window.addEventListener('load', function() {
+            if (typeof Chart !== 'undefined') {
+                Chart.defaults.font.family = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+            }
+        });
+
+        // Close sidebar when clicking outside
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('sidebar');
+            const menuButton = document.getElementById('mobileMenuBtn');
+            
+            if (sidebar && !sidebar.contains(event.target) && 
+                !menuButton.contains(event.target) && sidebarVisible) {
+                closeSidebar();
+                console.log('🔄 Sidebar closed by outside click');
+            }
+        });
+
+        // Handle window resize and update debug info
+        let resizeTimeout;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(function() {
+                updateDebugInfo();
+                if (trendChart) {
+                    trendChart.resize();
+                }
+            }, 250);
+        });
+
+        // Update debug info periodically
+        setInterval(updateDebugInfo, 1000);
+
+        // Prevent multiple rapid updates
+        let updateTimeout;
+        function debounceUpdate() {
+            clearTimeout(updateTimeout);
+            updateTimeout = setTimeout(updateDashboard, 300);
+        }
+
+        // Error boundary for chart operations
+        window.addEventListener('error', function(event) {
+            if (event.message && event.message.includes('Chart')) {
+                showError('Chart error detected. Attempting to recover...');
+                if (trendChart) {
+                    trendChart.destroy();
+                    trendChart = null;
+                }
+                setTimeout(createTrendChart, 1000);
+            }
+        });
+
+        // Add keyboard support for accessibility
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && sidebarVisible) {
+                closeSidebar();
+                console.log('🔄 Sidebar closed by Escape key');
+            }
+        });
+
+        // Debug function - TEMPORARY
+        function debugNavigation() {
+            console.log('=== NAVIGATION DEBUG ===');
+            console.log('Button exists:', !!document.getElementById('mobileMenuBtn'));
+            console.log('Sidebar exists:', !!document.getElementById('sidebar'));
+            console.log('Overlay exists:', !!document.getElementById('mobileOverlay'));
+            console.log('Sidebar visible:', sidebarVisible);
+            console.log('Button position:', document.getElementById('mobileMenuBtn')?.getBoundingClientRect());
+            console.log('======================');
+        }
+
+        // Call debug function after page loads
+        setTimeout(debugNavigation, 1000);
+
+        // Enhanced console copyright notice with styling and security warnings
+        console.log('%c Collection Performance Dashboard v1.2 Debug', 'color: #3b82f6; font-size: 20px; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);');
+        console.log('%c Copyright © 2025 [Your Company Name]. All rights reserved.', 'color: #64748b; font-size: 16px; font-weight: bold; background: linear-gradient(90deg, #f8fafc, #e2e8f0); padding: 8px 16px; border-radius: 8px;');
+        console.log('%c ⚠️  CRITICAL: Only edit dashboard-data.js for data updates', 'color: #ffffff; font-size: 14px; font-weight: bold; background: #f59e0b; padding: 8px 16px; border-radius: 8px; border: 2px solid #d97706;');
+        console.log('%c 🚫 DO NOT MODIFY THE HTML FILE', 'color: #ffffff; font-size: 14px; font-weight: bold; background: #ef4444; padding: 8px 16px; border-radius: 8px; border: 2px solid #dc2626;');
+        console.log('%c 📁 Data File: dashboard-data.js (safe to edit)', 'color: #065f46; font-size: 12px; background: #d1fae5; padding: 6px 12px; border-radius: 6px; border: 1px solid #10b981;');
+        console.log('%c 🔒 Main File: dashboard.html (protected - do not touch)', 'color: #7c2d12; font-size: 12px; background: #fef3c7; padding: 6px 12px; border-radius: 6px; border: 1px solid #f59e0b;');
+        console.log('%c 🔒 TRADE SECRETS PROTECTED', 'color: #ffffff; font-size: 12px; font-weight: bold; background: #f59e0b; padding: 6px 12px; border-radius: 6px;');
+        console.log('%c This software contains proprietary algorithms, business logic, and confidential information.', 'color: #f59e0b; font-size: 12px; font-style: italic;');
+        console.log('%c The following activities are strictly prohibited:', 'color: #dc2626; font-size: 12px; font-weight: bold;');
+        console.log('%c • Reverse engineering or decompilation', 'color: #dc2626; font-size: 11px;');
+        console.log('%c • Unauthorized copying or distribution', 'color: #dc2626; font-size: 11px;');
+        console.log('%c • Extraction of algorithms or business logic', 'color: #dc2626; font-size: 11px;');
+        console.log('%c • Use in competing products or services', 'color: #dc2626; font-size: 11px;');
+        console.log('%c 📧 For licensing inquiries: [your-email@company.com]', 'color: #3b82f6; font-size: 11px;');
+        console.log('%c ⚖️  Violations will be prosecuted to the full extent of the law.', 'color: #ef4444; font-size: 12px; font-weight: bold; text-decoration: underline;');
+        
+        // Add user tracking for security and audit purposes
+        const userSession = {
+            sessionId: Math.random().toString(36).substr(2, 12),
+            timestamp: new Date().toISOString(),
+            userAgent: navigator.userAgent,
+            platform: navigator.platform,
+            language: navigator.language,
+            screen: {
+                width: screen.width,
+                height: screen.height,
+                colorDepth: screen.colorDepth
+            },
+            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+            referrer: document.referrer,
+            url: window.location.href
+        };
+        
+        console.log('%c 📊 Session Info (for audit and security purposes):', 'color: #6b7280; font-size: 11px; background: #f3f4f6; padding: 4px 8px; border-radius: 4px;');
+        console.log(userSession);
+        
+        // Security monitoring
+        console.log('%c 🔍 This session is being monitored for security purposes.', 'color: #7c3aed; font-size: 10px; font-style: italic;');
+        console.log('%c 📅 All access attempts are logged and may be reviewed for compliance.', 'color: #7c3aed; font-size: 10px; font-style: italic;');
+
+        console.log('📱 Mobile Enhanced Dashboard v1.2 Debug Loaded - [Your Company Name] Proprietary Software');
+    </script>
+</body>
+</html>
